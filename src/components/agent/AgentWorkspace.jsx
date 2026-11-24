@@ -702,9 +702,9 @@ export default function AgentWorkspace() {
   }
 
   return (
-    <div className="flex-1 min-h-0 w-full bg-[#f8f9fa] dark:bg-[#141414] text-zinc-900 dark:text-zinc-100 flex flex-col overflow-hidden transition-colors">
+    <div className="flex-1 h-full min-h-0 w-full bg-[#f8f9fa] dark:bg-[#141414] text-zinc-900 dark:text-zinc-100 flex flex-col overflow-hidden transition-colors">
       {/* 3-Panel Main Layout */}
-      <div className="flex-1 min-h-0 flex overflow-hidden divide-x divide-zinc-200 dark:divide-[#252525]">
+      <div className="flex-1 h-full min-h-0 flex overflow-hidden divide-x divide-zinc-200 dark:divide-[#252525]">
         
         {/* ========================================================= */}
         {/* LEFT SIDEBAR: Select Channels (w-[230px])                  */}
@@ -788,7 +788,10 @@ export default function AgentWorkspace() {
         {/* ========================================================= */}
         {/* CENTER PANEL: Agent Chat                                  */}
         {/* ========================================================= */}
-        <main className="flex-1 min-w-0 min-h-0 grid grid-rows-[auto_minmax(0,1fr)_auto] bg-[#f8f9fa] dark:bg-[#141414] overflow-hidden relative transition-colors">
+        <main
+          className="flex-1 h-full min-w-0 min-h-0 grid grid-rows-[auto_minmax(0,1fr)_auto] bg-[#f8f9fa] dark:bg-[#141414] overflow-hidden relative transition-colors"
+          style={{ gridTemplateRows: "auto minmax(0, 1fr) auto" }}
+        >
           {/* Top Bar */}
           <div className="shrink-0 px-4 py-2.5 border-b border-zinc-200 dark:border-[#252525] bg-white dark:bg-[#161515] flex items-center justify-between transition-colors">
             <div className="flex items-center gap-2.5 min-w-0">
@@ -956,7 +959,7 @@ export default function AgentWorkspace() {
             <div ref={messagesEndRef} />
           </div>
 
-          <div className="flex flex-col">
+          <footer className="flex flex-col">
             {/* Quick Suggestions */}
             {messages.length <= 2 && (
               <div className="shrink-0 px-4 pb-2">
@@ -1017,7 +1020,7 @@ export default function AgentWorkspace() {
               <span>{selectedChannels.length} active channels</span>
             </div>
           </div>
-          </div>
+          </footer>
         </main>
 
         {/* ========================================================= */}
