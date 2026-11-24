@@ -866,7 +866,7 @@ export default function AgentWorkspace() {
           {/* Messages Scroll Area */}
           <div
             aria-live="polite"
-            className="flex-1 min-h-0 p-4 sm:p-5 overflow-y-auto flex flex-col gap-3.5 scrollbar-subtle"
+            className="flex-1 min-h-0 px-4 pt-4 pb-40 sm:px-5 sm:pt-5 overflow-y-auto flex flex-col gap-3.5 scrollbar-subtle"
           >
             {messages.map((msg) => {
               const isUser = msg.role === "user";
@@ -959,7 +959,7 @@ export default function AgentWorkspace() {
             <div ref={messagesEndRef} />
           </div>
 
-          <footer className="mt-auto flex w-full shrink-0 flex-col items-center border-t border-zinc-200 bg-[#f8f9fa]/95 dark:border-[#252525] dark:bg-[#141414]/95">
+          <footer className="absolute bottom-0 left-0 right-0 z-20 flex w-full shrink-0 flex-col items-center border-t border-zinc-200 bg-[#f8f9fa]/95 dark:border-[#252525] dark:bg-[#141414]/95">
             {/* Quick Suggestions */}
             {messages.length <= 2 && (
               <div className="w-full max-w-3xl px-4 pt-3 sm:px-6">
