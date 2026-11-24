@@ -864,7 +864,10 @@ export default function AgentWorkspace() {
           </div>
 
           {/* Messages Scroll Area */}
-          <div aria-live="polite" className="flex-1 min-h-0 p-4 sm:p-5 overflow-y-auto flex flex-col gap-3.5 scrollbar-subtle">
+          <div
+            aria-live="polite"
+            className={`flex-1 min-h-0 p-4 sm:p-5 ${messages.length <= 2 ? "pb-40" : "pb-24"} overflow-y-auto flex flex-col gap-3.5 scrollbar-subtle`}
+          >
             {messages.map((msg) => {
               const isUser = msg.role === "user";
               const copyText = sanitizeText(msg.content);
@@ -956,7 +959,7 @@ export default function AgentWorkspace() {
             <div ref={messagesEndRef} />
           </div>
 
-          <footer className="mt-auto flex shrink-0 flex-col">
+          <footer className="absolute inset-x-0 bottom-0 z-10 flex shrink-0 flex-col bg-[#f8f9fa]/95 dark:bg-[#141414]/95 backdrop-blur-sm">
             {/* Quick Suggestions */}
             {messages.length <= 2 && (
               <div className="shrink-0 px-4 pb-2">
