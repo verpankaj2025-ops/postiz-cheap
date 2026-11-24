@@ -788,7 +788,7 @@ export default function AgentWorkspace() {
         {/* ========================================================= */}
         {/* CENTER PANEL: Agent Chat                                  */}
         {/* ========================================================= */}
-        <main className="flex-1 min-w-0 min-h-0 flex flex-col bg-[#f8f9fa] dark:bg-[#141414] overflow-hidden relative transition-colors">
+        <main className="flex-1 min-w-0 min-h-0 grid grid-rows-[auto_minmax(0,1fr)_auto] bg-[#f8f9fa] dark:bg-[#141414] overflow-hidden relative transition-colors">
           {/* Top Bar */}
           <div className="shrink-0 px-4 py-2.5 border-b border-zinc-200 dark:border-[#252525] bg-white dark:bg-[#161515] flex items-center justify-between transition-colors">
             <div className="flex items-center gap-2.5 min-w-0">
@@ -864,7 +864,7 @@ export default function AgentWorkspace() {
           </div>
 
           {/* Messages Scroll Area */}
-          <div aria-live="polite" className="flex-1 min-h-0 p-4 sm:p-5 overflow-y-auto flex flex-col gap-3.5 scrollbar-subtle">
+          <div aria-live="polite" className="min-h-0 p-4 sm:p-5 overflow-y-auto flex flex-col gap-3.5 scrollbar-subtle">
             {messages.map((msg) => {
               const isUser = msg.role === "user";
               const copyText = sanitizeText(msg.content);
@@ -956,30 +956,31 @@ export default function AgentWorkspace() {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Quick Suggestions */}
-          {messages.length <= 2 && (
-            <div className="shrink-0 px-4 pb-2">
-              <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider block mb-1">
-                Suggestions:
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                {PROMPT_SUGGESTIONS.map((suggestion, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => handleSendMessage(suggestion)}
-                    className="px-2.5 py-1 rounded-md bg-white dark:bg-[#1a1919] hover:bg-zinc-100 dark:hover:bg-[#201f1f] border border-zinc-200 dark:border-[#252525] text-[11px] text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer text-left flex items-center gap-1.5 shadow-xs"
-                  >
-                    <FaBolt className="text-[9px] text-amber-500 dark:text-amber-400 shrink-0" />
-                    <span className="truncate max-w-xs">{suggestion}</span>
-                  </button>
-                ))}
+          <div className="flex flex-col">
+            {/* Quick Suggestions */}
+            {messages.length <= 2 && (
+              <div className="shrink-0 px-4 pb-2">
+                <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider block mb-1">
+                  Suggestions:
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {PROMPT_SUGGESTIONS.map((suggestion, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => handleSendMessage(suggestion)}
+                      className="px-2.5 py-1 rounded-md bg-white dark:bg-[#1a1919] hover:bg-zinc-100 dark:hover:bg-[#201f1f] border border-zinc-200 dark:border-[#252525] text-[11px] text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer text-left flex items-center gap-1.5 shadow-xs"
+                    >
+                      <FaBolt className="text-[9px] text-amber-500 dark:text-amber-400 shrink-0" />
+                      <span className="truncate max-w-xs">{suggestion}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
           {/* Floating Input Box */}
-          <div className="mt-auto shrink-0 p-3 border-t border-zinc-200 dark:border-[#252525] bg-white dark:bg-[#161515] transition-colors">
+          <div className="shrink-0 p-3 border-t border-zinc-200 dark:border-[#252525] bg-white dark:bg-[#161515] transition-colors">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -1015,6 +1016,7 @@ export default function AgentWorkspace() {
               <span>Enter to send • Shift+Enter for newline</span>
               <span>{selectedChannels.length} active channels</span>
             </div>
+          </div>
           </div>
         </main>
 
