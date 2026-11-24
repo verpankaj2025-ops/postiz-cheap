@@ -788,7 +788,7 @@ export default function AgentWorkspace() {
         {/* ========================================================= */}
         {/* CENTER PANEL: Agent Chat                                  */}
         {/* ========================================================= */}
-        <main className="flex-1 h-full min-w-0 min-h-0 flex flex-col bg-[#f8f9fa] dark:bg-[#141414] overflow-hidden relative transition-colors">
+        <main className="flex-1 h-full min-w-0 min-h-0 grid grid-rows-[auto_minmax(0,1fr)_auto] bg-[#f8f9fa] dark:bg-[#141414] overflow-hidden relative transition-colors">
           {/* Top Bar */}
           <div className="shrink-0 px-4 py-2.5 border-b border-zinc-200 dark:border-[#252525] bg-white dark:bg-[#161515] flex items-center justify-between transition-colors">
             <div className="flex items-center gap-2.5 min-w-0">
@@ -866,7 +866,7 @@ export default function AgentWorkspace() {
           {/* Messages Scroll Area */}
           <div
             aria-live="polite"
-            className={`flex-1 min-h-0 p-4 sm:p-5 ${messages.length <= 2 ? "pb-40" : "pb-24"} overflow-y-auto flex flex-col gap-3.5 scrollbar-subtle`}
+            className="min-h-0 p-4 sm:p-5 overflow-y-auto flex flex-col gap-3.5 scrollbar-subtle"
           >
             {messages.map((msg) => {
               const isUser = msg.role === "user";
@@ -959,10 +959,10 @@ export default function AgentWorkspace() {
             <div ref={messagesEndRef} />
           </div>
 
-          <footer className="absolute inset-x-0 bottom-0 z-10 flex shrink-0 flex-col bg-[#f8f9fa]/95 dark:bg-[#141414]/95 backdrop-blur-sm">
+          <footer className="flex w-full shrink-0 flex-col items-center border-t border-zinc-200 bg-[#f8f9fa]/95 dark:border-[#252525] dark:bg-[#141414]/95">
             {/* Quick Suggestions */}
             {messages.length <= 2 && (
-              <div className="shrink-0 px-4 pb-2">
+              <div className="w-full max-w-3xl px-4 pt-3 sm:px-6">
                 <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider block mb-1">
                   Suggestions:
                 </span>
@@ -987,13 +987,13 @@ export default function AgentWorkspace() {
             )}
 
           {/* Floating Input Box */}
-          <div className="shrink-0 p-3 border-t border-zinc-200 dark:border-[#252525] bg-white dark:bg-[#161515] transition-colors">
+          <div className="w-full max-w-3xl px-4 pt-2 pb-2.5 sm:px-6">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 handleSendMessage();
               }}
-              className="relative flex items-center bg-zinc-50 dark:bg-[#1a1919] border border-zinc-300 dark:border-[#282727] rounded-lg focus-within:border-[#612bd3] transition-colors"
+              className="relative flex items-end bg-white dark:bg-[#1a1919] border border-zinc-300 dark:border-[#383737] rounded-2xl shadow-sm focus-within:border-[#612bd3] focus-within:ring-2 focus-within:ring-[#612bd3]/10 transition-colors"
             >
               <textarea
                 value={inputText}
@@ -1006,13 +1006,13 @@ export default function AgentWorkspace() {
                 }}
                 placeholder="What would you like to post? (Enter to send)"
                 rows={1}
-                className="w-full bg-transparent px-3 py-2 text-xs text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none resize-none max-h-24 leading-normal"
+                className="min-h-12 w-full bg-transparent px-4 py-3 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none resize-none max-h-32 leading-relaxed"
               />
-              <div className="pr-2 flex items-center gap-1.5 shrink-0">
+              <div className="shrink-0 pr-2 pb-2">
                 <button
                   type="submit"
                   disabled={!inputText.trim() || isThinking}
-                  className="w-7 h-7 rounded-md bg-[#612bd3] hover:bg-[#7237e8] text-white flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                  className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl bg-[#612bd3] text-white transition-colors hover:bg-[#7237e8] disabled:cursor-not-allowed disabled:opacity-40"
                   title="Send"
                 >
                   <FaPaperPlane className="text-[10px]" />
