@@ -8,31 +8,53 @@ import { DemoStore } from "@/lib/demo-store";
 export async function DELETE(req, { params }) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session?.user) {
+    const userId = session?.user?.id;
+    if (typeof userId !== "string" || !userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
     const { id } = await params;
-    try {
-      const post = await prisma.scheduledPost.findUnique({
-        where: { id }
-      });
-
-      if (post) {
-        if (post.status === "processing") {
-          return NextResponse.json({ error: "Cannot delete a post that is currently uploading." }, { status: 400 });
-        }
-        await prisma.scheduledPost.delete({
-          where: { id }
-        });
-      } else {
-        DemoStore.deletePost(id);
-      }
-    } catch (dbErr) {
-      DemoStore.deletePost(id);
+    if (!id) {
+      return NextResponse.json({ error: "Post not found" }, { status: 404 });
     }
 
-    return NextResponse.json({ success: true, message: "Post deleted" });
+    try {
+      const deleted = await prisma.scheduledPost.deleteMany({
+        where: {
+          id,
+          userId,
+          status: { not: "processing" }
+        }
+      });
+
+      if (deleted.count === 1) {
+        return NextResponse.json({ success: true, message: "Post deleted" });
+      }
+
+      const existingPost = await prisma.scheduledPost.findFirst({
+        where: { id, userId },
+        select: { status: true }
+      });
+
+      if (!existingPost) {
+        return NextResponse.json({ error: "Post not found" }, { status: 404 });
+      }
+
+      return NextResponse.json({ error: "Cannot delete a post that is currently uploading." }, { status: 400 });
+    } catch (dbErr) {
+      console.warn("[DELETE_POST_FALLBACK] DB unavailable, checking user-owned in-memory posts:", dbErr.message);
+
+      const fallbackPost = DemoStore.getPosts().find((post) => post.id === id && post.userId === userId);
+      if (!fallbackPost) {
+        return NextResponse.json({ error: "Post not found" }, { status: 404 });
+      }
+      if (fallbackPost.status === "processing") {
+        return NextResponse.json({ error: "Cannot delete a post that is currently uploading." }, { status: 400 });
+      }
+
+      DemoStore.deletePost(id);
+      return NextResponse.json({ success: true, message: "Post deleted" });
+    }
   } catch (error) {
     console.error("[DELETE_POST_ERROR]", error);
     return NextResponse.json({ error: error.message || "Internal Server Error" }, { status: 500 });
