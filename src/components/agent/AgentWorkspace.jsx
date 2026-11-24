@@ -963,13 +963,17 @@ export default function AgentWorkspace() {
                 <span className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider block mb-1">
                   Suggestions:
                 </span>
-                <div className="flex flex-wrap gap-1.5">
+                <div
+                  aria-label="Quick message suggestions"
+                  role="group"
+                  className="flex flex-nowrap gap-1.5 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                >
                   {PROMPT_SUGGESTIONS.map((suggestion, idx) => (
                     <button
                       key={idx}
                       type="button"
                       onClick={() => handleSendMessage(suggestion)}
-                      className="px-2.5 py-1 rounded-md bg-white dark:bg-[#1a1919] hover:bg-zinc-100 dark:hover:bg-[#201f1f] border border-zinc-200 dark:border-[#252525] text-[11px] text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer text-left flex items-center gap-1.5 shadow-xs"
+                      className="shrink-0 max-w-[80vw] px-2.5 py-1 rounded-md bg-white dark:bg-[#1a1919] hover:bg-zinc-100 dark:hover:bg-[#201f1f] border border-zinc-200 dark:border-[#252525] text-[11px] text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer text-left flex items-center gap-1.5 shadow-xs"
                     >
                       <FaBolt className="text-[9px] text-amber-500 dark:text-amber-400 shrink-0" />
                       <span className="truncate max-w-xs">{suggestion}</span>
