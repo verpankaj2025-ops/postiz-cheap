@@ -171,7 +171,7 @@ export default function AppShell({ children }) {
   }
 
   return (
-    <div className="fixed inset-0 flex bg-[#f1f2f5] dark:bg-[#0e0e0e] text-slate-900 dark:text-white p-2 sm:p-2.5 font-sans overflow-hidden select-none transition-colors duration-200">
+    <div className="fixed inset-0 flex h-dvh w-full bg-[#f1f2f5] dark:bg-[#0e0e0e] text-slate-900 dark:text-white p-2 sm:p-2.5 font-sans overflow-hidden select-none transition-colors duration-200">
       {/* Mobile Backdrop */}
       {mobileMenuOpen && (
         <div
